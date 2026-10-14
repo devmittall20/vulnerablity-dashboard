@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NessusClientData_v2>
+  <Report name="Sample Network Scan">
+
+    <ReportHost name="192.168.1.10">
+      <HostProperties>
+        <tag name="host-fqdn">webserver-01.internal</tag>
+        <tag name="operating-system">Ubuntu 20.04 LTS</tag>
+      </HostProperties>
+
+      <ReportItem port="443" severity="4" pluginName="Apache Log4j RCE (Log4Shell)" pluginID="155999">
+        <cve>CVE-2021-44228</cve>
+        <cvss_base_score>10.0</cvss_base_score>
+        <description>A critical remote code execution vulnerability exists in Apache Log4j. An attacker can exploit this by sending a specially crafted string to force a JNDI lookup, resulting in remote code execution on the server.</description>
+        <solution>Update Apache Log4j to version 2.17.1 or later. Apply vendor patches immediately. Consider using a WAF rule to block JNDI lookup strings.</solution>
+        <risk_factor>Critical</risk_factor>
+      </ReportItem>
+
+      <ReportItem port="22" severity="3" pluginName="SSH Weak Cipher Algorithms Enabled" pluginID="70658">
+        <cve>CVE-2023-38408</cve>
+        <cvss_base_score>7.5</cvss_base_score>
+        <description>The remote SSH server is configured to use weak cipher algorithms. An attacker could exploit this to decrypt or intercept sensitive network traffic.</description>
+        <solution>Reconfigure the SSH server to disable weak cipher algorithms such as arcfour, blowfish-cbc, and cast128-cbc. Enforce only AES-256 or ChaCha20 ciphers.</solution>
+        <risk_factor>High</risk_factor>
+      </ReportItem>
+
+      <ReportItem port="80" severity="2" pluginName="HTTP TRACE / TRACK Methods Enabled" pluginID="11213">
+        <cvss_base_score>5.0</cvss_base_score>
+        <description>The remote web server supports the TRACE and TRACK methods which are used for diagnostic purposes. An attacker may use this to conduct cross-site tracing (XST) attacks or steal authentication credentials.</description>
+        <solution>Disable the TRACE and TRACK methods in the web server configuration.</solution>
+        <risk_factor>Medium</risk_factor>
+      </ReportItem>
+    </ReportHost>
+
+    <ReportHost name="10.0.0.5">
+      <HostProperties>
+        <tag name="host-fqdn">db-server-prod.internal</tag>
+        <tag name="operating-system">Windows Server 2019</tag>
+      </HostProperties>
+
+      <ReportItem port="1433" severity="4" pluginName="MS SQL Server Unpatched (EternalBlue)" pluginID="97833">
+        <cve>CVE-2017-0144</cve>
+        <cvss_base_score>9.8</cvss_base_score>
+        <description>The remote Microsoft SQL Server host is vulnerable to a critical remote code execution vulnerability via the SMBv1 protocol. This is the same vulnerability exploited by the WannaCry ransomware campaign.</description>
+        <solution>Apply Microsoft security bulletin MS17-010 immediately. Disable SMBv1 on all systems. Block port 445 at the network perimeter.</solution>
+        <risk_factor>Critical</risk_factor>
+      </ReportItem>
+
+      <ReportItem port="3389" severity="3" pluginName="RDP Exposed to Internet" pluginID="58453">
+        <cve>CVE-2019-0708</cve>
+        <cvss_base_score>9.8</cvss_base_score>
+        <description>Remote Desktop Protocol (RDP) is exposed on this host and is vulnerable to BlueKeep, a pre-authentication remote code execution vulnerability. No user interaction is required for exploitation.</description>
+        <solution>Apply the Microsoft security update for CVE-2019-0708. Restrict RDP access behind a VPN. Enable Network Level Authentication (NLA).</solution>
+        <risk_factor>Critical</risk_factor>
+      </ReportItem>
+
+      <ReportItem port="0" severity="1" pluginName="SSL Certificate Expiring Soon" pluginID="42981">
+        <cvss_base_score>2.6</cvss_base_score>
+        <description>The SSL certificate for this host will expire within the next 30 days. Expired certificates will trigger browser warnings and may cause service disruptions.</description>
+        <solution>Renew the SSL certificate before expiration. Consider using Let's Encrypt for automatic certificate renewal.</solution>
+        <risk_factor>Low</risk_factor>
+      </ReportItem>
+    </ReportHost>
+
+    <ReportHost name="172.16.0.20">
+      <HostProperties>
+        <tag name="host-fqdn">mail-server.company.com</tag>
+        <tag name="operating-system">CentOS 7</tag>
+      </HostProperties>
+
+      <ReportItem port="25" severity="3" pluginName="SMTP Open Relay" pluginID="10267">
+        <cvss_base_score>7.5</cvss_base_score>
+        <description>The remote SMTP server appears to be an open mail relay. An attacker can abuse this to send unsolicited email (spam) or conduct phishing campaigns using your mail server.</description>
+        <solution>Reconfigure the mail server to only allow relaying from authenticated users and trusted IP ranges. Implement SPF, DKIM, and DMARC records.</solution>
+        <risk_factor>High</risk_factor>
+      </ReportItem>
+
+      <ReportItem port="443" severity="2" pluginName="SQL Injection Vulnerability in Web Login" pluginID="44000">
+        <cve>CVE-2023-12345</cve>
+        <cvss_base_score>6.5</cvss_base_score>
+        <description>A SQL injection vulnerability was discovered in the web login form. An attacker can manipulate SQL queries to bypass authentication or extract sensitive data from the database. This falls under OWASP Top 10 A03:2021.</description>
+        <solution>Implement parameterized queries / prepared statements. Use an ORM. Apply input validation and output encoding. Review all user-supplied input points.</solution>
+        <risk_factor>Medium</risk_factor>
+      </ReportItem>
+    </ReportHost>
+
+  </Report>
+</NessusClientData_v2>
